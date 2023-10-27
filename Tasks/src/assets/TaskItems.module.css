@@ -1,0 +1,25 @@
+
+.box{
+    height:500px;
+    width: 50%;
+    border: 5px solid lightgray;
+    border-radius: 16px;
+    display:flex;
+    flex-direction: column;
+}
+.addnewtask{
+    height: 50px;
+    width: 100%;
+    background-color: lightgray;
+    /* display:inline-flex; */
+    padding-top: 7px;
+    align-items: center;
+    padding-left:10px;
+}
+.addnewtask>p{
+    padding-left: 30px;
+}
+.boxContent{
+    margin: 30px;
+    height: 80%;
+}
