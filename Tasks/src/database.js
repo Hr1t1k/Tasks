@@ -37,7 +37,11 @@ const listSchema= new mongoose.Schema({
     tasks:[taskSchema]
 });
 const userSchema =new mongoose.Schema({
-  id:String, 
+  _id:{type:String,
+    required:true,
+    unique:true,
+    background:false,
+  }, 
   lists:[listSchema]
 });
 
@@ -59,40 +63,38 @@ const defaultItems=[item1,item2,item3];
 const Lists= mongoose.model("List",listSchema);
 const main= new Lists({
     name:"main",
-    items:defaultItems,
+    tasks:defaultItems,
 });
 const defaultList=[main];
 const User= mongoose.model("User",userSchema);
-
-
-
 const options={returnDocument:"after"};
 
 //When Email is entered
 
 //IMP:::: NEED TO FIGURE OUT WHAT TO DO WHEN USER IS ALREADY REGISTERED WITH OAUTH
 async function findUser(username){
-  const user=await User.findOne({id:username}).exec();
-  return user;
+  try{
+  var user= await User.findOne({_id:username}).exec()
+  if(user){
+    return user;
+  }else{
+    const user=new User({
+      id:username,
+      lists:defaultList,
+    });
+    await user.save();
+    return user;
+    } 
+  }catch(error){
+      return  User.findOne({_id:username}).exec();
+    };
 }
 
 app.post("/",async (req,res)=>{
-  console.log("U");
-    const user=await findUser(req.body.username);
-    if(user){
-      console.log(user);
-      res.json(user.lists);
-    }
-    else{
-
-      const user=new User({
-        id:req.body.username,
-        lists:defaultList,
-      });
-      console.log(user);
-      user.save();
-      res.json(user.lists);
-    }
+    const user= await findUser(req.body.username).then(user=>{
+      const result=user.lists.map(list=>{return {name:list.name,id:list._id}});
+      res.json(result);
+    })
 });
 
 

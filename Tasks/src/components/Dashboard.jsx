@@ -6,22 +6,27 @@ import { useNavigate } from "react-router-dom";
 import Header from "./Header.jsx"
 import { NavLink } from "react-router-dom";
 import TaskItems from "./TaskItems";
+import axios from "axios";
 
 // import "../../src/index.css";	
 export default ()=> {
 	const [greeting, setGreeting] = useState("Morning");
 	const [isLoggedIn, setIsLoggedIn] = useState(false);
-	const [lists,setLists]=useState([]);
+	const [lists,setLists]=useState([{}]);
 	const navigate = useNavigate();
 	onAuthStateChanged(auth,(user) => {
 		if (user) {
 		setIsLoggedIn(true);
-		
-		console.log(user);
+		axios.post(
+            "http://localhost:4000/",{username:user.uid},
+          ).then((response) => {
+            setLists(response.data);
+          }).catch((error) => {
+            console.log(error);
+          });
 		} else {
 		setIsLoggedIn(false);
 		navigate("/getStarted");
-		console.log(user);
 		}
 	});
 	return (
@@ -34,10 +39,10 @@ export default ()=> {
 					{lists.map((list)=>{
 						return <li>
 							<NavLink
-                                to={`/dashboard/lists.id`}
+                                to={`/dashboard/${list.id}`}
                                 className={({isActive}) =>`block py-2 pr-4 pl-3 duration-200 ${isActive ? "text-orange-700" : "text-gray-700"} border-b border-gray-100 hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 hover:text-orange-700 lg:p-0`}
                             >
-                                Home
+                                {list.name}
                             </NavLink>
 						</li>
 					})}
