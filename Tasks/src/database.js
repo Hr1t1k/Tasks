@@ -177,6 +177,14 @@ app.post("/getUserWithEmail",(req,res)=>{
   });
 })
 
+app.post("/getTasks",(req,res)=>{
+    User.findOne({_id:req.body.username,"lists.id":req.body.list}).then(tasks=>{
+      const result=tasks.lists[0].tasks.map(task=>{return {content:task.content,id:task._id}});
+      console.log(result);
+      res.json(result);
+    });
+})
+
 //Get all the lists of user  
 app.listen(port,()=>{
     console.log(`Server running on Port:${port}.`);

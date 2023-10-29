@@ -12,10 +12,17 @@ import './scss/styles.scss'
 
 // Import all of Bootstrap's JS
 import * as bootstrap from 'bootstrap'
+import TaskItems from "./components/TaskItems.jsx";
 const router = createBrowserRouter([
   {
     path: "/",
     element: <Dashboard />,
+    children:[
+      {
+        path:"task/:taskId",
+        element:<TaskItems/>,
+      }
+    ]
   },
   {
     path:"/getStarted",
