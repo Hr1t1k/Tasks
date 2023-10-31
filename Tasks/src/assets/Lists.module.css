@@ -1,0 +1,20 @@
+.lists{
+    /* height:calc(100vh-1px); */
+    
+    /* background-color: black; */
+    color:white;
+}
+.listItems{
+    color:white;
+    text-decoration: none;
+    padding:10px 20px;
+    margin-left: 0px;
+    margin-top: 5px;
+    
+}
+.activeList{
+    background-color:rgb(47, 43, 43);
+    font-weight: bold;  
+    color:white;
+    border-radius: 20px;
+}

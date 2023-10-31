@@ -65,7 +65,11 @@ const main= new Lists({
     name:"main",
     tasks:defaultItems,
 });
-const defaultList=[main];
+const alt=new Lists({
+  name:"alty",
+  tasks:defaultItems,
+});
+const defaultList=[main,alt];
 const User= mongoose.model("User",userSchema);
 const options={returnDocument:"after"};
 
@@ -94,6 +98,8 @@ app.post("/",async (req,res)=>{
     const user= await findUser(req.body.username).then(user=>{
       const result=user.lists.map(list=>{return {name:list.name,id:list._id}});
       res.json(result);
+    }).catch(error=>{
+        console.log(error);
     })
 });
 
@@ -137,18 +143,7 @@ app.post("/renameList",async(req,res)=>{
     res.json(user);
 })
 
-//Add new task
-app.post("/addTask",async(req,res)=>{
-  const listName=req.body.listName;
-  const content=req.body.content;
-  const item=new Items({content:content});
-    const user=await User.findOneAndUpdate(
-      {_id:req.user.id,"lists.name":listName},
-      {$push:{"lists.$.tasks":item}},
-      options
-    ).exec();
-    res.json(user);
-})
+
 
 //Delete a task
 app.post("/deleteTask",async(req,res)=>{
@@ -178,11 +173,39 @@ app.post("/getUserWithEmail",(req,res)=>{
 })
 
 app.post("/getTasks",(req,res)=>{
-    User.findOne({_id:req.body.username,"lists.id":req.body.list}).then(tasks=>{
-      const result=tasks.lists[0].tasks.map(task=>{return {content:task.content,id:task._id}});
-      console.log(result);
-      res.json(result);
+    // User.findOne({_id:req.body.username,"lists._id":req.body.list}).then(tasks=>{
+    //   //const result=tasks.lists[0].tasks.map(task=>{return {content:task.content,id:task._id}});
+    //   const result=tasks.lists.filter(task=>{
+    //     task._id==req.body.list;
+    //     console.log(task)
+    //     console.log(task);
+    //   })
+    //   console.log(tasks.lists);
+    //   console.log(result);
+    //   res.json(result);
+    // }).catch(err=>{
+    //   console.log(err);
+    // })
+    User.findById(req.body.username).then(user=>{
+      const list = user.lists.find((list) => list._id.equals(req.body.list));
+      res.json(list.tasks);
+    })
+})
+//Add new task
+app.post("/addTask",async(req,res)=>{
+  const listId=req.body.list;
+  const content=req.body.content;
+  const id=req.body.username;
+  const item=new Items({content:content});
+  await User.findOneAndUpdate(
+      {_id:id,"lists._id":listId},
+      {$push:{"lists.$.tasks":item}},
+      options
+    ).then(updatedVal=>{
+      res.redirect(307,"/getTasks")}).catch(error=>{
+      console.log(error);
     });
+    
 })
 
 //Get all the lists of user  

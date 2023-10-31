@@ -1,7 +1,8 @@
 
 .box{
-    height:500px;
-    width: 50%;
+    height:100%px;
+    width: 100%;
+    max-width: 600px;
     border: 5px solid lightgray;
     border-radius: 16px;
     display:flex;
@@ -20,6 +21,39 @@
     padding-left: 30px;
 }
 .boxContent{
-    margin: 30px;
-    height: 80%;
+    margin: 25px;
+    height: 100%;
+}
+
+.task{
+    display:flex;
+}
+.task:hover{
+    background-color:lightgray;
+    cursor: pointer;
+}
+.checkBox{
+    margin-top:4px;
+    margin-right:10px;
+    border-radius:50%;
+    width:20px !important;
+    height:20px !important;
+    border: 1px solid black;
+}
+.checkBoxInactive{
+    margin-top:4px;
+    margin-right:10px;
+    display:none;
+    width:15px;
+    height:20px;
+    border: 1px solid black;
+    border-radius: 50%;
+    transform: rotate(45deg);
+}
+.checkMark{
+    display:none;
+}
+.inactive{
+   text-decoration: line-through; 
+
 }
