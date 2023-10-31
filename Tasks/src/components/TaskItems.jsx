@@ -19,7 +19,7 @@ export default (props)=>{
             console.log(user.uid);
             console.log(id);
         axios.post(
-            "http://localhost:4000/getTasks",{username:user.uid,list:id},
+            "https://tasksdatabase.onrender.com/getTasks",{username:user.uid,list:id},
           ).then((response) => {
             setTasks(response.data);
             console.log(response.data);

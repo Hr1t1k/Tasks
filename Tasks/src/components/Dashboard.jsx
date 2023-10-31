@@ -16,7 +16,7 @@ export default ()=> {
 			if (user) {
 				setName(user.displayName);
 				console.log("main call to api",user.uid);
-			axios.post("http://localhost:4000/",{username:user.uid}).then((response) => {
+			axios.post("https://tasksdatabase.onrender.com/",{username:user.uid}).then((response) => {
                     setLists(response.data);
 					console.log("lists returned",response.data);
                		//if(response.data)navigate(`/task/${response.data[0].id}`);

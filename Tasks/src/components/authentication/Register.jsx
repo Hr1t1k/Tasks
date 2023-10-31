@@ -27,6 +27,13 @@ function Register(props) {
     }).catch((error) => {
       console.log(error);
     });
+    axios.post(
+      "https://tasksdatabase.onrender.com/addUser",{username:email,id:user.uid},
+    ).then((response) => {
+      console.log(response.data);
+      const name=response.data.name;
+      navigate("/getStarted/login", { state: { email ,name }});
+    })
     navigate("/");
     console.log(user);
   })

@@ -2,12 +2,12 @@ import express from "express";
 import mongoose from "mongoose";
 import findOrCreate from "mongoose-findorcreate";
 
-import admin from "firebase-admin";
-import serviceAccount from "../firebaseAdminCredentials.json" assert { type: "json" };;
+// import admin from "firebase-admin";
+// import serviceAccount from "../firebaseAdminCredentials.json" assert { type: "json" };;
 
-admin.initializeApp({
-  credential: admin.credential.cert(serviceAccount)
-});
+// admin.initializeApp({
+//   credential: admin.credential.cert(serviceAccount)
+// });
 
 const app=express();
 //Server will run on http://localhost:4000
@@ -38,6 +38,11 @@ const listSchema= new mongoose.Schema({
 });
 const userSchema =new mongoose.Schema({
   _id:{type:String,
+    required:true,
+    unique:true,
+    background:false,
+  },
+  email:{type:String,
     required:true,
     unique:true,
     background:false,
@@ -84,6 +89,24 @@ async function findUser(username){
   }else{
     const user=new User({
       id:username,
+      lists:defaultList,
+    });
+    await user.save();
+    return user;
+    } 
+  }catch(error){
+      return  User.findOne({_id:username}).exec();
+    };
+}
+async function findUserByEmail(username,email){
+  try{
+  var user= await User.findOne({email:email}).exec()
+  if(user){
+    return user;
+  }else{
+    const user=new User({
+      id:username,
+      email:email,
       lists:defaultList,
     });
     await user.save();
@@ -159,33 +182,30 @@ app.post("/deleteTask",async(req,res)=>{
 
 app.post("/getUserWithEmail",(req,res)=>{
   console.log(req.body.username);
-    admin.auth()
-  .getUserByEmail(req.body.username)
-  .then((userRecord) => {
-    // See the UserRecord reference doc for the contents of userRecord.
-    console.log(`Successfully fetched user data: ${userRecord.toJSON()}`);
-    res.status(200).json("User exist");
-  })
-  .catch((error) => {
-    console.log('Error fetching user data:', error);
-    res.status(400).json("user Not found");
-  });
+  // admin.auth()
+  // .getUserByEmail(req.body.username)
+  // .then((userRecord) => {
+  //   // See the UserRecord reference doc for the contents of userRecord.
+  //   console.log(`Successfully fetched user data: ${userRecord.toJSON()}`);
+  //   res.status(200).json("User exist");
+  // })
+  // .catch((error) => {
+  //   console.log('Error fetching user data:', error);
+  //   res.status(400).json("user Not found");
+  // });
+    User.findOne({email:req.body.username}).then(user=>{
+      if(user){
+        console.log("found");
+        res.status(200).json("User exist")
+      }else{
+        console.log("Not found");
+        res.status(400).json("User not found")
+      }
+    }
+      ).catch(error=> console.log(error));
 })
 
 app.post("/getTasks",(req,res)=>{
-    // User.findOne({_id:req.body.username,"lists._id":req.body.list}).then(tasks=>{
-    //   //const result=tasks.lists[0].tasks.map(task=>{return {content:task.content,id:task._id}});
-    //   const result=tasks.lists.filter(task=>{
-    //     task._id==req.body.list;
-    //     console.log(task)
-    //     console.log(task);
-    //   })
-    //   console.log(tasks.lists);
-    //   console.log(result);
-    //   res.json(result);
-    // }).catch(err=>{
-    //   console.log(err);
-    // })
     User.findById(req.body.username).then(user=>{
       const list = user.lists.find((list) => list._id.equals(req.body.list));
       res.json(list.tasks);
@@ -206,6 +226,12 @@ app.post("/addTask",async(req,res)=>{
       console.log(error);
     });
     
+})
+
+app.post("/addUser",async(req,res)=>{
+  const email=req.body.username;
+  const id=req.body.id;
+  findUserByEmail(email,id);
 })
 
 //Get all the lists of user  
