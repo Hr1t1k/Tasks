@@ -1,5 +1,5 @@
 import React,{useEffect, useState,useRef} from "react";
-import {useParams,useLocation } from "react-router-dom";
+import {useParams,useLocation, useNavigate } from "react-router-dom";
 import classItems from "../assets/TaskItems.module.css";
 import axios from "axios";
 import auth from "../config/firebase-config";
@@ -20,6 +20,7 @@ export default (props)=>{
     const [editable,setEditable]=useState(false);
     const [name,setName]=useState("");
     const {lists,setLists}=useList();
+    const navigate=useNavigate();
     function handleChange(event){
         setName(event.target.value);
     }
@@ -40,20 +41,19 @@ export default (props)=>{
         axios.post(
             "https://tasksdatabase.onrender.com/renameList",{username:user.uid,listId:id,newListName:name},
           ).then((response) => {
-            console.log("Rename list output",response.data);
             setLists(response.data);
-            console.log(lists);
-          }).catch(error=>console.log(error));
+          }).catch(error=>{
+            console.log(error)
+            navigate("/");
+          });
     }
     useEffect(()=>{
-        console.log(user);
         onAuthStateChanged(auth,(user) => {
         axios.post(
             "https://tasksdatabase.onrender.com/getTasks",{username:user.uid,list:id},
           ).then((response) => {
             setTasks(response.data[0]);
             setName(response.data[1]);
-            console.log(response.data);
           })
         })
     },[params,user]);

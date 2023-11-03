@@ -1,13 +1,33 @@
-import react from "react";
+import react, { useEffect } from "react";
 import "./Google.css";
-import { GoogleAuthProvider ,signInWithRedirect} from "firebase/auth";
+import { GoogleAuthProvider,getRedirectResult ,signInWithRedirect} from "firebase/auth";
 import auth from "../../config/firebase-config";
 export default function Google(){
   const provider = new GoogleAuthProvider();
 
-  function handleClick(){
-    signInWithRedirect(auth, provider);
+  async function handleClick(){
+    signInWithRedirect(auth, provider).then(console.log("umm yeah"));
+    getRedirectResult(auth)
+  .then((result) => {
+    console.log("inside Redirect URL");
+    // This gives you a Google Access Token. You can use it to access Google APIs.
+    const credential = GoogleAuthProvider.credentialFromResult(result);
+    const token = credential.accessToken;
 
+    // The signed-in user info.
+    const user = result.user;
+    console.log("GOogle log in ",user);
+    // IdP data available using getAdditionalUserInfo(result)
+    // ...
+  }).catch((error) => {
+    // Handle Errors here.
+    const errorCode = error.code;
+    const errorMessage = error.message;
+    // The email of the user's account used.
+    
+    // The AuthCredential type that was used.
+    const credential = GoogleAuthProvider.credentialFromError(error);
+  });
   }
     return <button onClick={handleClick}className="gsi-material-button" style={{width:"100%"}}>
     <div className="gsi-material-button-state"></div>

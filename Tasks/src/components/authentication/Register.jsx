@@ -30,10 +30,10 @@ function Register(props) {
           "https://tasksdatabase.onrender.com/addUser",{username:email,id:user.uid},
       ).then((response) => {
           console.log("Reg");
+          localStorage.setItem("uid",user.uid);
+          localStorage.setItem("email",user.email);
           navigate("/");
       })
-    navigate("/");
-    console.log(user);
   })
   .catch((error) => {
     const errorCode = error.code;

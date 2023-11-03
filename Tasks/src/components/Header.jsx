@@ -1,10 +1,14 @@
 import React from "react";
 import auth from "../config/firebase-config";
 import { signOut } from "firebase/auth";
+import { useNavigate } from "react-router-dom";
 
 export default ()=>{
+    const navigate=useNavigate();
     function handleSignOut(){
         signOut(auth).then(()=>{
+            localStorage.removeItem("uid");
+            localStorage.removeItem("email");
             navigate("/");
         })
     }
