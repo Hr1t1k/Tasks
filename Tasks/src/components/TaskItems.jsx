@@ -10,11 +10,12 @@ import DeleteList from "./DeleteList";
 import RenameList from "./RenameList";
 import useList from "../context/ListContext";
 import { ClickAwayListener } from '@mui/base/ClickAwayListener';
+import { Skeleton } from "@mui/material";
 
 export default (props)=>{
     const params=useParams();
     const id=params.taskId;
-    const [tasks,setTasks]=useState([{}]);
+    const [tasks,setTasks]=useState(null);
     const user = auth.currentUser;
     const [editable,setEditable]=useState(false);
     const [name,setName]=useState("");
@@ -74,9 +75,17 @@ export default (props)=>{
             <div className={classItems.tasks} style={{height:"80%"}}>
 				<div className={classItems.box} style={{height:"100%"}}>
 					<div className={`${classItems.boxContent} , overflow-auto`}>
-                            {tasks.map((task)=>{
+                            {
+                                tasks?tasks.map((task)=>{
                                 return <TaskContent task={task} key={task._id} id={task._id} listId={id}  setTasks={setTasks}/>
-                            })}         
+                                }):
+                                <div  className="d-flex d-md-block align-items-center">  
+                                    <Skeleton variant="text" sx={{ fontSize: '1.5rem' ,bgcolor:"lightGray", width:"100%" ,margin:"0px 10px"}} />
+                                    <Skeleton variant="text" sx={{ fontSize: '1.5rem' ,bgcolor:"lightGray", width:"80%",margin:"0px 10px"}} />
+                                    <Skeleton variant="text" sx={{ fontSize: '1.5rem' ,bgcolor:"lightGray", width:"70%" ,margin:"0px 10px"}} />
+                                    <Skeleton variant="text" sx={{ fontSize: '1.5rem' ,bgcolor:"lightGray", width:"80%",margin:"0px 10px"}} />
+                                </div>          
+                            }         
 					</div>
 					<AddNewTask  taskId={id} setTasks={setTasks}/>
 				</div>

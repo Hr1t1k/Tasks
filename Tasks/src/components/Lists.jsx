@@ -1,8 +1,11 @@
 import React,{useState} from "react";
-import {Link, NavLink } from "react-router-dom";
- import Lists from"../assets/Lists.module.css";
+import {NavLink } from "react-router-dom";
+import Lists from"../assets/Lists.module.css";
 import AddNewList from "./modal";
 import useList from "../context/ListContext";
+import Stack from '@mui/material/Stack';
+
+import Skeleton from '@mui/material/Skeleton';
 
 export default (props)=>{
     const {lists,setLists}=useList();
@@ -11,7 +14,7 @@ export default (props)=>{
             <AddNewList setLists={setLists}/>
             <nav className="nav flex-row flex-md-column flex-nowrap flex-shrink-0 overflow-auto" >
 
-            {lists && lists.map((list)=>{
+            {lists?lists.map((list)=>{
                 return (<>
                     <div className="vr d-md-none"></div>
                     <NavLink key={list.id} className={({ isActive, isPending, isTransitioning }) =>
@@ -27,7 +30,12 @@ export default (props)=>{
                     </>
                 );
                     
-            })}		
+            }):
+            <div  className="d-flex d-md-block align-items-center">  
+                <Skeleton variant="text" sx={{ fontSize: '1.5rem' ,bgcolor:"lightGray", width:"100px" ,margin:"0px 10px"}} />
+                <Skeleton variant="text" sx={{ fontSize: '1.5rem' ,bgcolor:"lightGray", width:"80px",margin:"0px 10px"}} />
+            </div>
+            }		
             </nav>
 		</div>
     );
