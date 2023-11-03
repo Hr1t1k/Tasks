@@ -1,28 +1,32 @@
 import React,{useState} from "react";
 import {Link, NavLink } from "react-router-dom";
  import Lists from"../assets/Lists.module.css";
-export default (props)=>{
-    const lists=props.lists;
-    const setLists=props.setLists;
-    return (
-        <div className={` ${Lists.lists} d-flex flex-md-column flex-row flex-shrink-0 align-items-center align-items-md-start p-0 p-md-4`} >			
-            <h3 className="m-0" >My Lists +</h3>
-            <nav className="nav flex-row flex-md-column " >
+import AddNewList from "./modal";
+import useList from "../context/ListContext";
 
-            {lists.map((list)=>{
-                return <>
-                    <NavLink className={({ isActive, isPending, isTransitioning }) =>
+export default (props)=>{
+    const {lists,setLists}=useList();
+    return (
+        <div className={` ${Lists.lists} d-flex flex-md-column flex-row flex-nowrap flex-shrink-0 overflow-auto align-items-center align-items-md-start p-0 p-md-4`} >			
+            <AddNewList setLists={setLists}/>
+            <nav className="nav flex-row flex-md-column flex-nowrap flex-shrink-0 overflow-auto" >
+
+            {lists && lists.map((list)=>{
+                return (<>
+                    <div className="vr d-md-none"></div>
+                    <NavLink key={list.id} className={({ isActive, isPending, isTransitioning }) =>
                         [
                         Lists.listItems,
                         isActive ? Lists.activeList : "",
                         
                         ].join(" ")
-                    } to={`/task/${list.id}`}>
+                    } to={`/task/${list._id}`}>
                         {list.name}
                     </NavLink>
-                    <div class="vr d-md-none"></div>
-
+                    
                     </>
+                );
+                    
             })}		
             </nav>
 		</div>

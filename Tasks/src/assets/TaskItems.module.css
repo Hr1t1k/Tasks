@@ -1,4 +1,14 @@
-
+.activeList{
+    display:flex;
+    border: 3px solid black;
+    border-radius: 20px;
+    padding: 0px 10px;
+    align-items: center;
+    font-size: 30px;
+    font-weight: 400;
+    width: fit-content;
+    margin: 20px;
+}
 .box{
     height:100%px;
     width: 100%;
@@ -26,18 +36,21 @@
 }
 
 .task{
-    display:flex;
+    display:inline-flex;
+    flex:0;
 }
 .task:hover{
-    background-color:lightgray;
+    background-color:rgba(238, 233, 233, 0.815);
     cursor: pointer;
 }
 .checkBox{
-    margin-top:4px;
+    margin-top:3px;
     margin-right:10px;
     border-radius:50%;
     width:20px !important;
     height:20px !important;
+    min-width: 20px;
+    min-height: 20px;
     border: 1px solid black;
 }
 .checkBoxInactive{

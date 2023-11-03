@@ -1,7 +1,15 @@
 import react from "react";
 import "./Google.css";
+import { GoogleAuthProvider ,signInWithRedirect} from "firebase/auth";
+import auth from "../../config/firebase-config";
 export default function Google(){
-    return <button className="gsi-material-button" style={{width:"100%"}}>
+  const provider = new GoogleAuthProvider();
+
+  function handleClick(){
+    signInWithRedirect(auth, provider);
+
+  }
+    return <button onClick={handleClick}className="gsi-material-button" style={{width:"100%"}}>
     <div className="gsi-material-button-state"></div>
     <div className="gsi-material-button-content-wrapper">
       <div className="gsi-material-button-icon">

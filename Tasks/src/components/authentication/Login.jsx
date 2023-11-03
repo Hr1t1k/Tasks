@@ -62,7 +62,7 @@ function Login(props) {
               setError={setError}
               text={password}
               setText={setPassword}
-              type="email"
+              type="password"
             />
           </FormControl>
           <FormControl sx={{display: "inline-grid",width:"100%", gridTemplate:"1fr /1fr 1fr" ,justifyContent:"space-between",alignItems:"center"}}>

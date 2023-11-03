@@ -1,0 +1,11 @@
+.main{
+    height: 100vh;
+}
+.lists{
+    background-color: black;
+}
+@media (min-width: 767.98px) { 
+    .lists{
+        max-width: 300px !important;
+    }
+}

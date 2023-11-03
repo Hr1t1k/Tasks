@@ -18,7 +18,7 @@ export default (props)=>{
         console.log(user.uid);
         console.log(user.uid);
         axios.post("https://tasksdatabase.onrender.com/addTask",{username:user.uid,list:props.taskId,content:content}).then(res=>{
-            props.setTasks(res.data);
+            props.setTasks(res.data[0]);
         })
         setContent("");
     }

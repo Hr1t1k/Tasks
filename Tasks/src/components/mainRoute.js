@@ -6,19 +6,13 @@ import Dashboard from "./Dashboard.jsx";
 import LoginHome from "./authentication/LoginHome.jsx";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
-
 export default ()=>{
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
-    //const navigate = useNavigate();
-  
+    const [isLoggedIn, setIsLoggedIn] = useState(false);  
     onAuthStateChanged(auth,(user) => {
       if (user) {
         setIsLoggedIn(true);
-        console.log(user);
       } else {
         setIsLoggedIn(false);
-        //navigate("/");
-        console.log(user);
       }
     });
     return (<>

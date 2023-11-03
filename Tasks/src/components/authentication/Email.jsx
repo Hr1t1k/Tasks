@@ -16,7 +16,6 @@ function Email() {
       setError(true);
       return;
     } else {
-          const emailId=email;
           await axios.post(
             "https://tasksdatabase.onrender.com/getUserWithEmail",{username:email},
           ).then((response) => {

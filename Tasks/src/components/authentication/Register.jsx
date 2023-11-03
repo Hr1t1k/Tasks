@@ -13,27 +13,25 @@ function Register(props) {
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
   const [error, setError] = useState(false);
-  const[emailErr,setEmailErr] = useState(false);
   const navigate = useNavigate();
 
   async function handleSubmit(event) {
     event.preventDefault();
     createUserWithEmailAndPassword(auth, email, password)
-  .then((userCredential) => {
-    // Signed up 
-    const user = userCredential.user;
-    updateProfile(user, {
-      displayName: name
-    }).catch((error) => {
-      console.log(error);
-    });
-    axios.post(
-      "https://tasksdatabase.onrender.com/addUser",{username:email,id:user.uid},
-    ).then((response) => {
-      console.log(response.data);
-      const name=response.data.name;
-      navigate("/getStarted/login", { state: { email ,name }});
-    })
+  .then(async(userCredential) => {
+      // Signed up 
+      const user = userCredential.user;
+     await updateProfile(user, {
+          displayName: name
+      }).catch((error) => {
+          console.log(error);
+      });
+      await axios.post(
+          "https://tasksdatabase.onrender.com/addUser",{username:email,id:user.uid},
+      ).then((response) => {
+          console.log("Reg");
+          navigate("/");
+      })
     navigate("/");
     console.log(user);
   })

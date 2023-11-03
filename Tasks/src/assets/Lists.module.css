@@ -1,7 +1,4 @@
 .lists{
-    /* height:calc(100vh-1px); */
-    
-    /* background-color: black; */
     color:white;
 }
 .listItems{
@@ -10,7 +7,7 @@
     padding:10px 20px;
     margin-left: 0px;
     margin-top: 5px;
-    
+    margin-bottom: 5px;
 }
 .activeList{
     background-color:rgb(47, 43, 43);
