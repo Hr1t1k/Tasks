@@ -4,20 +4,17 @@ import classItems from "../assets/TaskItems.module.css";
 import axios from "axios";
 
 export default (props)=>{
-    const user=auth.currentUser;
+    const uid=localStorage.getItem("uid");
     const [content,setContent]=useState("");
-    //console.log(props.taskId);
     function handleChange(event){
         setContent(event.target.value);
     }
     function handleSubmit(event){
         event.preventDefault();
-        if(content==="" ||!user){
+        if(content==="" ||!uid){
             return ;
         }
-        console.log(user.uid);
-        console.log(user.uid);
-        axios.post("https://tasksdatabase.onrender.com/addTask",{username:user.uid,list:props.taskId,content:content}).then(res=>{
+        axios.post("https://tasksdatabase.onrender.com/addTask",{username:uid,list:props.taskId,content:content}).then(res=>{
             props.setTasks(res.data[0]);
         })
         setContent("");

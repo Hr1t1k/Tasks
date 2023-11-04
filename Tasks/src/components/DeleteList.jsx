@@ -1,15 +1,14 @@
 import React,{useState} from "react";
 import axios from "axios";
-import auth from "../config/firebase-config";
 import DeleteIcon from '@mui/icons-material/Delete';
 import { Outlet, useNavigate } from "react-router-dom";
 import useList from "../context/ListContext";
 export default (props)=>{
-    const user=auth.currentUser;
+    const uid=localStorage.getItem("uid");
     const navigate=useNavigate();
     const {setLists} =useList();
     function handleClick(){
-        axios.post("https://tasksdatabase.onrender.com/deleteList",{username:user.uid,listId:props.listId})
+        axios.post("https://tasksdatabase.onrender.com/deleteList",{username:uid,listId:props.listId})
         .then((response) => {
             console.log("lists returned for delete",response.data);
             setLists(response.data);

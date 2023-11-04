@@ -3,7 +3,7 @@ import Paper from "@mui/material/Paper";
 import Google from "../buttons/Google";
 import { Outlet, useNavigate } from "react-router-dom";
 import auth from "../../config/firebase-config"
-import { onAuthStateChanged } from "firebase/auth";
+import { onAuthStateChanged, getRedirectResult, GoogleAuthProvider } from "firebase/auth";
 import axios from "axios";
 function Home() {
   const navigate=useNavigate();
@@ -13,13 +13,15 @@ function Home() {
       return ;
     }else{
      const  user=auth.currentUser;
-			if (user) {
+     onAuthStateChanged(auth,(user)=>{
+      if (user) {
         localStorage.setItem("uid",user.uid);
         localStorage.setItem("email",user.email);
-        console.log(user);
 				axios.post("https://tasksdatabase.onrender.com/addUser",{username:user.email,id:user.uid}).then(navigate("/"))
         return 
       }
+     })
+			
     }	
   
   },[navigate,auth])

@@ -1,11 +1,9 @@
-import React,{useEffect, useState,useRef} from "react";
-import {useParams,useLocation, useNavigate } from "react-router-dom";
+import React,{useEffect, useState} from "react";
+import {useParams, useNavigate } from "react-router-dom";
 import classItems from "../assets/TaskItems.module.css";
 import axios from "axios";
-import auth from "../config/firebase-config";
 import TaskContent from "./TaskContent";
 import AddNewTask from "./AddNewTask";
-import { onAuthStateChanged } from "firebase/auth";
 import DeleteList from "./DeleteList";
 import RenameList from "./RenameList";
 import useList from "../context/ListContext";
@@ -16,10 +14,10 @@ export default (props)=>{
     const params=useParams();
     const id=params.taskId;
     const [tasks,setTasks]=useState(null);
-    const user = auth.currentUser;
+    const uid=localStorage.getItem("uid");
     const [editable,setEditable]=useState(false);
     const [name,setName]=useState("");
-    const {lists,setLists}=useList();
+    const {setLists}=useList();
     const navigate=useNavigate();
     function handleChange(event){
         setName(event.target.value);
@@ -32,7 +30,7 @@ export default (props)=>{
     function handleSubmit(event){
         event.preventDefault();
         axios.post(
-            "https://tasksdatabase.onrender.com/renameList",{username:user.uid,listId:id,newListName:name},
+            "https://tasksdatabase.onrender.com/renameList",{username:uid,listId:id,newListName:name},
           ).then((response) => {
             setLists(response.data);
           }).catch(error=>{
@@ -41,15 +39,16 @@ export default (props)=>{
           });
     }
     useEffect(()=>{
-        onAuthStateChanged(auth,(user) => {
+        const uid=localStorage.getItem("uid");
+        if(uid){
         axios.post(
-            "https://tasksdatabase.onrender.com/getTasks",{username:user.uid,list:id},
+            `${import.meta.env.VITE_DATABASE_URL}/getTasks`,{username:uid,list:id},
           ).then((response) => {
             setTasks(response.data[0]);
             setName(response.data[1]);
           })
-        })
-    },[params,user]);
+        }
+    },[params]);
     
     return (
         <>

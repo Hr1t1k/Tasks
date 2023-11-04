@@ -5,10 +5,10 @@ import auth from "../config/firebase-config";
 
 export default (props)=>{
     const [active,setActive]=useState(true);
-    const user = auth.currentUser;
+    const uid = localStorage.getItem("uid");
     function handleClick(event){
         setActive(value=>{return !value});
-        axios.post("https://tasksdatabase.onrender.com/deleteTask",{username:user.uid,list:props.listId,taskId:props.task._id})
+        axios.post("https://tasksdatabase.onrender.com/deleteTask",{username:uid,list:props.listId,taskId:props.task._id})
         .then((response) => {
             props.setTasks(response.data);
         setActive(value=>{return !value});

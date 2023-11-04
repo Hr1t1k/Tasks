@@ -2,7 +2,9 @@ import react, { useEffect } from "react";
 import "./Google.css";
 import { GoogleAuthProvider,getRedirectResult ,signInWithRedirect} from "firebase/auth";
 import auth from "../../config/firebase-config";
+import { useNavigate } from "react-router-dom";
 export default function Google(){
+  const navigate=useNavigate();
   const provider = new GoogleAuthProvider();
 
   async function handleClick(){
@@ -17,6 +19,9 @@ export default function Google(){
     // The signed-in user info.
     const user = result.user;
     console.log("GOogle log in ",user);
+    localStorage.setItem("uid",user.uid);
+    localStorage.setItem("email",user.email);
+    navigate("/")
     // IdP data available using getAdditionalUserInfo(result)
     // ...
   }).catch((error) => {
