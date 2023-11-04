@@ -79,7 +79,7 @@ export default (props)=>{
                                 tasks?tasks.map((task)=>{
                                 return <TaskContent task={task} key={task._id} id={task._id} listId={id}  setTasks={setTasks}/>
                                 }):
-                                <div  className="d-flex d-md-block align-items-center">  
+                                <div  className="align-items-center">  
                                     <Skeleton variant="text" sx={{ fontSize: '1.5rem' ,bgcolor:"lightGray", width:"100%" ,margin:"0px 10px"}} />
                                     <Skeleton variant="text" sx={{ fontSize: '1.5rem' ,bgcolor:"lightGray", width:"80%",margin:"0px 10px"}} />
                                     <Skeleton variant="text" sx={{ fontSize: '1.5rem' ,bgcolor:"lightGray", width:"70%" ,margin:"0px 10px"}} />
