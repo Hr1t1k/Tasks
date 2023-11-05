@@ -1,10 +1,8 @@
 import React,{useState} from "react";
 import {NavLink } from "react-router-dom";
 import Lists from"../assets/Lists.module.css";
-import AddNewList from "./modal";
+import AddNewList from "./AddList";
 import useList from "../context/ListContext";
-import Stack from '@mui/material/Stack';
-
 import Skeleton from '@mui/material/Skeleton';
 
 export default (props)=>{
@@ -21,7 +19,8 @@ export default (props)=>{
                         [
                         Lists.listItems,
                         isActive ? Lists.activeList : "",
-                        
+                        isPending? "pending":"",
+                        isTransitioning?"transitioning":"",
                         ].join(" ")
                     } to={`/task/${list._id}`}>
                         {list.name}

@@ -24,7 +24,7 @@ export default ()=>{
                             <img src="https://source.unsplash.com/32x32/?person" alt="mdo" width="32" height="32" className="rounded-circle"/>
                         </a>
                         <ul className="dropdown-menu text-small">
-                            <li><a className="dropdown-item" href="#">Settings</a></li>
+                            <li><a className="dropdown-item" href="#">{localStorage.getItem("email")}</a></li>
                             <li><hr className="dropdown-divider"/></li>
                             <li><a className="dropdown-item" href="#" onClick={handleSignOut}>Sign out</a></li>
                         </ul>

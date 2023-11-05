@@ -7,39 +7,40 @@ import Login from "./components/authentication/Login.jsx";
 import Register from "./components/authentication/Register.jsx";
 import TaskItems from "./components/TaskItems.jsx";
 import {ListProvider} from "./context/ListContext.js";
+import Error from "./components/Error/Error.jsx";
 export default ()=>{
     const router = createBrowserRouter([
         {
           path: "/",
           element: <Dashboard />,
-          errorElement:<div>Oops! Something unexpected happened, <Link to="/">Click here to go back to home page.</Link></div>,
+          errorElement:<Error />,
           children:[
             {
               path:"task/:taskId",
               element:<TaskItems/>,
-              errorElement:<div>Oops! Something unexpected happened, <Link to="/">Click here to go back to home page.</Link></div>,
+              errorElement:<Error />,
             }
           ]
         },
         {
           path:"/getStarted",
           element:<LoginHome />,
-          errorElement:<div>Oops! Something unexpected happened, <Link to="/">Click here to go back to home page.</Link></div>,
+          errorElement:<Error />,
           children:[
             {
               path:"/getStarted",
               element:<Email />,
-              errorElement:<div>Oops! Something unexpected happened, <Link to="/">Click here to go back to home page.</Link></div>,
+              errorElement:<Error />,
             },
             {
               path:"/getStarted/login",
               element:<Login />,
-              errorElement:<div>Oops! Something unexpected happened, <Link to="/">Click here to go back to home page.</Link></div>,
+              errorElement:<Error />,
             },
             {
               path:"/getStarted/register",
               element:<Register />,
-              errorElement:<div>Oops! Something unexpected happened, <Link to="/">Click here to go back to home page.</Link></div>,
+              errorElement:<Error />,
             }
           ]
         },

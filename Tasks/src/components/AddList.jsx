@@ -16,7 +16,7 @@ export default ()=>{
     }
     
     function handleClick(){
-        axios.post("https://tasksdatabase.onrender.com/addList",{username:uid,listName:text})
+        axios.post(`${import.meta.env.VITE_DATABASE_URL}/addList`,{username:uid,listName:text})
         .then((response) => {
             setLists(response.data);
             console.log("lists returned",response.data);

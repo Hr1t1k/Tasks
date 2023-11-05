@@ -8,7 +8,7 @@ export default (props)=>{
     const uid = localStorage.getItem("uid");
     function handleClick(event){
         setActive(value=>{return !value});
-        axios.post("https://tasksdatabase.onrender.com/deleteTask",{username:uid,list:props.listId,taskId:props.task._id})
+        axios.post(`${import.meta.env.VITE_DATABASE_URL}/deleteTask`,{username:uid,list:props.listId,taskId:props.task._id})
         .then((response) => {
             props.setTasks(response.data);
         setActive(value=>{return !value});

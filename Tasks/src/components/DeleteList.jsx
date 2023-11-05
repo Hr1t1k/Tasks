@@ -1,16 +1,15 @@
-import React,{useState} from "react";
+import React from "react";
 import axios from "axios";
 import DeleteIcon from '@mui/icons-material/Delete';
-import { Outlet, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import useList from "../context/ListContext";
 export default (props)=>{
     const uid=localStorage.getItem("uid");
     const navigate=useNavigate();
     const {setLists} =useList();
     function handleClick(){
-        axios.post("https://tasksdatabase.onrender.com/deleteList",{username:uid,listId:props.listId})
+        axios.post(`${import.meta.env.VITE_DATABASE_URL}/deleteList`,{username:uid,listId:props.listId})
         .then((response) => {
-            console.log("lists returned for delete",response.data);
             setLists(response.data);
             if(response.data)navigate("/");
 

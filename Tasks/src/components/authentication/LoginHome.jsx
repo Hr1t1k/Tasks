@@ -1,6 +1,6 @@
 import React,{useEffect} from "react";
 import Paper from "@mui/material/Paper";
-import Google from "../buttons/Google";
+import Google from "./Google/Google";
 import { Outlet, useNavigate } from "react-router-dom";
 import auth from "../../config/firebase-config"
 import { onAuthStateChanged, getRedirectResult, GoogleAuthProvider } from "firebase/auth";
@@ -9,7 +9,7 @@ function Home() {
   const navigate=useNavigate();
   useEffect(()=>{
     if(localStorage.getItem("uid")){
-      axios.post("https://tasksdatabase.onrender.com/addUser",{username:localStorage.getItem("email"),id:localStorage.getItem("uid")}).then(navigate("/"))
+      axios.post(`${import.meta.env.VITE_DATABASE_URL}/addUser`,{username:localStorage.getItem("email"),id:localStorage.getItem("uid")}).then(navigate("/"))
       return ;
     }else{
      const  user=auth.currentUser;
@@ -17,7 +17,7 @@ function Home() {
       if (user) {
         localStorage.setItem("uid",user.uid);
         localStorage.setItem("email",user.email);
-				axios.post("https://tasksdatabase.onrender.com/addUser",{username:user.email,id:user.uid}).then(navigate("/"))
+				axios.post(`${import.meta.env.VITE_DATABASE_URL}/addUser`,{username:user.email,id:user.uid}).then(navigate("/"))
         return 
       }
      })
