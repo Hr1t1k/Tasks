@@ -4,8 +4,8 @@ import InputText from "../InputText";
 import SubmitButton from "../SubmitButton";
 import { useLocation } from "react-router-dom";
 import axios from "axios";
-import auth from "../../config/firebase-config"
-import { createUserWithEmailAndPassword,updateProfile } from "firebase/auth";
+import auth from "../../config/firebase-config";
+import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
 
 function Register(props) {
@@ -18,29 +18,32 @@ function Register(props) {
   async function handleSubmit(event) {
     event.preventDefault();
     createUserWithEmailAndPassword(auth, email, password)
-  .then(async(userCredential) => {
-      // Signed up 
-      const user = userCredential.user;
-     await updateProfile(user, {
-          displayName: name
-      }).catch((error) => {
+      .then(async (userCredential) => {
+        // Signed up
+        const user = userCredential.user;
+        await updateProfile(user, {
+          displayName: name,
+        }).catch((error) => {
           console.log(error);
-      });
-      await axios.post(
-          "https://tasksdatabase.onrender.com/addUser",{username:email,id:user.uid},
-      ).then((response) => {
-          console.log("Reg");
-          localStorage.setItem("uid",user.uid);
-          localStorage.setItem("email",user.email);
-          navigate("/");
+        });
+        await axios
+          .post(`${import.meta.env.VITE_DATABASE_URL}/addUser`, {
+            username: email,
+            id: user.uid,
+          })
+          .then((response) => {
+            console.log("Reg");
+            localStorage.setItem("uid", user.uid);
+            localStorage.setItem("email", user.email);
+            navigate("/");
+          });
       })
-  })
-  .catch((error) => {
-    const errorCode = error.code;
-    const errorMessage = error.message;
-    console.log(errorMessage);
-    // ..
-  });
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        console.log(errorMessage);
+        // ..
+      });
   }
 
   const location = useLocation();
@@ -53,7 +56,7 @@ function Register(props) {
   }, [location]);
 
   if (email === null) {
-    return ;
+    return;
   } else {
     return (
       <>
@@ -79,9 +82,17 @@ function Register(props) {
               type="password"
             />
           </FormControl>
-          <FormControl sx={{display: "inline-grid",width:"100%", gridTemplate:"1fr / 1fr" ,justifyContent:"space-between",alignItems:"center"}}>
+          <FormControl
+            sx={{
+              display: "inline-grid",
+              width: "100%",
+              gridTemplate: "1fr / 1fr",
+              justifyContent: "space-between",
+              alignItems: "center",
+            }}
+          >
             {/* <a style={{width:"fit-content" ,display:"inline-flex"}}>Forgot Password?</a> */}
-            <SubmitButton value="Register"  />
+            <SubmitButton value="Register" />
           </FormControl>
         </form>
       </>

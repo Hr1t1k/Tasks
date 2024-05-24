@@ -7,7 +7,9 @@ export default () => {
   const navigate = useNavigate();
   function handleSignOut() {
     signOut(auth).then(() => {
-      //   navigate("/");
+      localStorage.removeItem("email");
+      localStorage.removeItem("uid");
+      navigate("/getStarted");
     });
   }
   return (
@@ -39,7 +41,7 @@ export default () => {
               <ul className="dropdown-menu text-small">
                 <li>
                   <a className="dropdown-item" href="#">
-                    {localStorage.getItem("email")}
+                    {auth.currentUser.email}
                   </a>
                 </li>
                 <li>
