@@ -1,14 +1,14 @@
 import React, { useState } from "react";
 import TextField from "@mui/material/TextField";
-import Visibility from '@mui/icons-material/Visibility';
-import VisibilityOff from '@mui/icons-material/VisibilityOff';
-import IconButton from '@mui/material/IconButton';
-import InputAdornment from '@mui/material/InputAdornment';
+import Visibility from "@mui/icons-material/Visibility";
+import VisibilityOff from "@mui/icons-material/VisibilityOff";
+import IconButton from "@mui/material/IconButton";
+import InputAdornment from "@mui/material/InputAdornment";
 
 var val = "";
 function InputText(props) {
-  const [error,setError]=useState(false);
-  const [showPassword, setShowPassword] = useState(props.type!=="password");
+  const [error, setError] = useState(false);
+  const [showPassword, setShowPassword] = useState(props.type !== "password");
 
   const handleClickShowPassword = () => setShowPassword((show) => !show);
 
@@ -26,11 +26,9 @@ function InputText(props) {
     event.preventDefault();
     props.setError(true);
     console.log("The input is invalid!");
-    if(event.target.value==="") {
+    if (event.target.value === "") {
       setError(true);
-    }
-    else props.setError(true);
-    
+    } else props.setError(true);
   };
   val = props.text;
   return (
@@ -41,26 +39,26 @@ function InputText(props) {
       InputProps={{
         onInvalid: handleInvalid,
       }}
-      required
       onChange={handleChange}
-      helperText={(error || props.error)?`Please enter correct ${props.name}`: " "}
+      helperText={error || props.error ? props.errorMessage : " "}
       value={props.text}
-      type={showPassword ? 'text' : 'password'}
-      {...props.type==="password" && {InputProps:{
-            endAdornment:(
-              <InputAdornment position="end">
-                <IconButton
-                  aria-label="toggle password visibility"
-                  onClick={handleClickShowPassword}
-                  onMouseDown={handleMouseDownPassword}
-                >
-                  {showPassword ? <Visibility /> : <VisibilityOff />}
-                </IconButton>
-              </InputAdornment>
-            )
-      }}
-      }
-      sx={{ width: "100%", margin: "auto",  marginTop:"20px"}}
+      type={showPassword ? "text" : "password"}
+      {...(props.type === "password" && {
+        InputProps: {
+          endAdornment: (
+            <InputAdornment position="end">
+              <IconButton
+                aria-label="toggle password visibility"
+                onClick={handleClickShowPassword}
+                onMouseDown={handleMouseDownPassword}
+              >
+                {showPassword ? <Visibility /> : <VisibilityOff />}
+              </IconButton>
+            </InputAdornment>
+          ),
+        },
+      })}
+      sx={{ width: "100%", margin: "auto", marginTop: "10px" }}
     />
   );
 }

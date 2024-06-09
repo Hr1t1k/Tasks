@@ -6,11 +6,17 @@ function SubmitButton(props) {
     <Button
       type="submit"
       variant="contained"
+      disabled={props.loading}
       sx={{
         height: "50px",
         width: "100%",
         margin: "30px 0px",
         textAlign: "center",
+        borderRadius: "25px",
+        backgroundColor: "green",
+        "&:hover": {
+          backgroundColor: "darkgreen",
+        },
       }}
     >
       {props.value}

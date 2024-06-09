@@ -8,7 +8,6 @@ pnpm-debug.log*
 lerna-debug.log*
 firebaseAdminCredentials.json
 node_modules
-config
 dist
 dist-ssr
 *.local

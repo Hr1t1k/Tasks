@@ -7,9 +7,7 @@ export default () => {
   const navigate = useNavigate();
   function handleSignOut() {
     signOut(auth).then(() => {
-      localStorage.removeItem("email");
-      localStorage.removeItem("uid");
-      navigate("/getStarted");
+      navigate("/login");
     });
   }
   return (
@@ -31,7 +29,10 @@ export default () => {
                 aria-expanded="false"
               >
                 <img
-                  src="https://source.unsplash.com/32x32/?person"
+                  src={`${
+                    auth.currentUser.photoURL ||
+                    `https://eu.ui-avatars.com/api/?name=${auth.currentUser.displayName}&size=250`
+                  }`}
                   alt="mdo"
                   width="32"
                   height="32"
