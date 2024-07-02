@@ -8,7 +8,7 @@ export default (props) => {
   }
   return (
     <>
-      <button className={`btn pe-0 `} onClick={handleClick}>
+      <button className={`btn pe-0`} onClick={handleClick}>
         <EditIcon />
       </button>
     </>

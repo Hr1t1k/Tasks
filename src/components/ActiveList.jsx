@@ -48,7 +48,7 @@ export default (props) => {
   return (
     <div className={classItems.activeList}>
       <ClickAwayListener onClickAway={handleClickAwayEvent}>
-        <div className="d-flex">
+        <div className="d-flex overflow-hidden">
           {editable && (
             <form onSubmit={handleSubmit} className="d-flex">
               <input
@@ -71,8 +71,13 @@ export default (props) => {
           )}
 
           {!editable && (
-            <>
-              <div>{name} </div>
+            <div className="p-0 m-0 d-flex overflow-hidden  mw-100">
+              <div
+                className="flex-fill text-truncate overflow-hidden mw-100"
+                style={{ maxWidth: "calc(100% - 1000px)" }}
+              >
+                {name}{" "}
+              </div>
               <RenameList
                 listid={id}
                 setEditable={setEditable}
@@ -83,7 +88,7 @@ export default (props) => {
                 listId={id}
                 default={currList.default}
               />
-            </>
+            </div>
           )}
         </div>
       </ClickAwayListener>

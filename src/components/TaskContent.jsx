@@ -30,7 +30,7 @@ export default (props) => {
   return (
     <div
       onClick={handleClick}
-      className={`d-flex ${classItems.task} align-items-center p-2 ${
+      className={`d-flex ${classItems.task} align-items-center p-1 ${
         active ? classItems.active : classItems.inactive
       }`}
     >

@@ -27,6 +27,7 @@ export default () => {
   const [loading, setLoading] = useState(true);
   useEffect(() => {
     setLoading(true);
+    console.time("Function Execution Time (ms)");
     instance
       .get(`/list`)
       .then((response) => {
@@ -41,10 +42,11 @@ export default () => {
       .finally(() => {
         setLoading(false);
       });
+    console.timeEnd("Function Execution Time (ms)");
   }, []);
   useEffect(() => {
-    if (location.pathname === "/" && response.data) {
-      navigate(`/task/${response.data[0]._id}`);
+    if (location.pathname === "/" && lists.length) {
+      navigate(`/task/${lists[0]._id}`);
     }
   }, [location.pathname]);
 
@@ -79,7 +81,7 @@ export default () => {
               }
             </div>
             <div
-              className={` flex-fill px-md-5 overflow-auto ${
+              className={` flex-fill px-md-5 px-1 pb-1 overflow-auto ${
                 navigation.state === "loading" ? "loading" : ""
               }`}
               // style={{ height: "calc(100vh - 53px)" }}

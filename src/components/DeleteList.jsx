@@ -35,7 +35,7 @@ export default (props) => {
         <>
           <button
             type="button"
-            className="btn "
+            className="btn p-0 "
             data-bs-toggle="modal"
             data-bs-target="#deleteList"
           >

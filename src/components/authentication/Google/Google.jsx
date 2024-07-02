@@ -4,13 +4,23 @@ import {
   GoogleAuthProvider,
   signInWithRedirect,
   browserPopupRedirectResolver,
+  signInWithPopup,
 } from "firebase/auth";
 import auth from "../../../config/firebase-config";
+import { useNavigate } from "react-router-dom";
 export default function Google() {
+  const navigate = useNavigate();
   const provider = new GoogleAuthProvider();
   // provider.addScope((redirect_uri = "http://localhost:5173/"));
   async function handleClick() {
-    signInWithRedirect(auth, provider, browserPopupRedirectResolver);
+    // signInWithRedirect(auth, provider, browserPopupRedirectResolver);
+    signInWithPopup(auth, provider)
+      .then(() => {
+        navigate("/");
+      })
+      .catch((error) => {
+        consolelog(error.message);
+      });
   }
   return (
     <button

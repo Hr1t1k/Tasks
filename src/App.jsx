@@ -18,6 +18,7 @@ export default () => {
     {
       path: "/",
       element: <Home />,
+      errorElement: <Error />,
       children: [
         {
           path: "/login",
@@ -55,8 +56,8 @@ export default () => {
     },
   ]);
   useEffect(() => {
+    console.log(auth.currentUser);
     onAuthStateChanged(auth, () => {
-      console.log(auth?.currentUser?.accessToken);
       setLoaded(true);
     });
   }, []);

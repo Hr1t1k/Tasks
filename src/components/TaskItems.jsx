@@ -24,7 +24,7 @@ export default (props) => {
   const [name, setName] = useState("");
   useEffect(() => {
     setLoading(true);
-    if (uid) {
+    if (uid && id) {
       instance
         .get(`/task`, {
           params: {
@@ -64,11 +64,10 @@ export default (props) => {
         <div
           className={`${classItems.tasks} flex-fill h-100  d-md-block d-flex justify-content-center pb-md-3`}
         >
-          <div
-            className={`${classItems.box} `}
-            //  style={{ height: "100%" }}
-          >
-            <div className={`${classItems.boxContent} , overflow-auto`}>
+          <div className={`${classItems.box} p-0 m-0 `}>
+            <div
+              className={`${classItems.boxContent} , overflow-auto p-0 m-2 mx-md-3`}
+            >
               {!loading && tasks ? (
                 tasks.map((task) => {
                   return (
