@@ -2,7 +2,9 @@ import React, { useState } from "react";
 import DeleteList from "./DeleteList";
 import RenameList from "./RenameList";
 import useList from "../context/ListContext";
-import { ClickAwayListener } from "@mui/base/ClickAwayListener";
+// import { ClickAwayListener } from "@mui/base/ClickAwayListener";
+import ClickAwayListener from "react-click-away-listener";
+
 import { useParams, useNavigate } from "react-router-dom";
 import classItems from "../assets/TaskItems.module.css";
 import axios from "axios";

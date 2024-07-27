@@ -1,0 +1,1 @@
+import{u,b as c,r,a as n,j as t,O as g}from"./index-166f2e56.js";const m=()=>{const s=u(),e=c(),[o,i]=r.useState(!0),a=e.pathname==="/login"||e.pathname==="/register"||e.pathname==="/reset-password";return r.useEffect(()=>{n.currentUser&&a?s("/"):!n.currentUser&&!a&&s("/login"),i(!1)},[e.pathname]),t.jsx(t.Fragment,{children:!o&&t.jsx(g,{})})};export{m as default};

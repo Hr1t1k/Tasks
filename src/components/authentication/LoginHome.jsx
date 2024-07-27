@@ -1,19 +1,9 @@
-import React, { useLayoutEffect } from "react";
+import React from "react";
 import Paper from "@mui/material/Paper";
+import { Link } from "react-router-dom";
 import Google from "./Google/Google";
 import Login from "./Login";
-import { Link, Navigate, useNavigate } from "react-router-dom";
-import auth from "../../config/firebase-config";
-import { getRedirectResult } from "firebase/auth";
 function Home() {
-  const navigate = useNavigate();
-  useLayoutEffect(() => {
-    getRedirectResult(auth).then((result) => {
-      console.log("Inside redirect result", result);
-      if (result) navigate("/");
-    });
-  }, []);
-
   return (
     <>
       <div

@@ -2,15 +2,22 @@ import React, { useEffect, useLayoutEffect, useState } from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { getRedirectResult, onAuthStateChanged } from "firebase/auth";
 
-import Dashboard from "./components/Dashboard.jsx";
-import LoginHome from "./components/authentication/LoginHome.jsx";
-import Register from "./components/authentication/Register.jsx";
-import TaskItems from "./components/TaskItems.jsx";
-import Error from "./components/Error/Error.jsx";
-
+const Dashboard = React.lazy(() => import("./components/Dashboard.jsx"));
+const LoginHome = React.lazy(() =>
+  import("./components/authentication/LoginHome.jsx")
+);
+const Register = React.lazy(() =>
+  import("./components/authentication/Register.jsx")
+);
+const TaskItems = React.lazy(() => import("./components/TaskItems.jsx"));
+const Error = React.lazy(() => import("./components/Error/Error.jsx"));
+const Home = React.lazy(() => import("./components/Home.jsx"));
+const ForgotPassword = React.lazy(() =>
+  import("./components/authentication/ForgotPassword.jsx")
+);
 import auth from "./config/firebase-config.js";
-import Home from "./components/Home.jsx";
-import ForgotPassword from "./components/authentication/ForgotPassword.jsx";
+// import Home from "./components/Home.jsx";
+// import ForgotPassword from "./components/authentication/ForgotPassword.jsx";
 
 export default () => {
   const [loaded, setLoaded] = useState(false);
@@ -56,7 +63,6 @@ export default () => {
     },
   ]);
   useEffect(() => {
-    console.log(auth.currentUser);
     onAuthStateChanged(auth, () => {
       setLoaded(true);
     });
